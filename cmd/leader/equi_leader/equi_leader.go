@@ -6,19 +6,24 @@ func equiLeader(A []int) int {
 	if len(A) == 1 {
 		return 0
 	}
-	stack := make([]int, 0)
-	stack = append(stack, A[0])
-	for i := 1; i < len(A); i++ {
-		stack = append(stack, A[i])
-		if len(stack) > 1 {
-			if stack[len(stack)-1] != stack[len(stack)-2] {
-				stack = stack[:len(stack)-2]
+	size, value := 0, -1
+	for i := range A {
+		if size == 0 {
+			size++
+			value = A[i]
+		} else {
+			if value != A[i] {
+				size--
+			} else {
+				size++
 			}
 		}
 	}
 	var candidate int
-	if len(stack) > 0 {
-		candidate = stack[0]
+	if size > 0 {
+		candidate = value
+	} else {
+		return 0
 	}
 	var count int
 	for _, e := range A {
